@@ -5,6 +5,8 @@ import { TempDataController } from "../controller/TempDataController";
 const routes = Router();
 const tempDataController = new TempDataController();
 
-routes.post("/cadastro", tempDataController.register);
+routes.post("/temp", tempDataController.register);
+
+routes.get("/temp", tempDataController.getAll);
 
 export default routes;

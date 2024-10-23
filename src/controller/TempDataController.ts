@@ -18,12 +18,6 @@ class TempDataController {
 
       const createdTempData = await TempData.create(newTempData);
 
-      // return res.status(201).json({
-      //   success: true,
-      //   message: "Registro criado com sucesso",
-      //   data: createdTempData,
-      // });
-
       return SendResponse.success(
         res,
         201,
@@ -32,12 +26,29 @@ class TempDataController {
       );
     } catch (error) {
       console.log("🚀 ~ TempData ~ error:", error);
-      // return res.status(500).json({
-      //   success: false,
-      //   message: "Erro ao cadastrar usuário",
-      // });
 
-      return SendResponse.error(res, 500, "Erro ao cadastrar usuário");
+      return SendResponse.error(res, 500, "Erro ao cadastrar temperatura");
+    }
+  }
+
+  async getAll(req: Request, res: Response) {
+    try {
+      const { limit = "10", skip = "0" }: any = req.query;
+
+      const skipNumber = parseInt(skip, 10);
+      const limitNumber = parseInt(limit, 10);
+
+      const temps = await TempData.find().limit(limit).skip(skip);
+
+      return SendResponse.success(
+        res,
+        200,
+        "Sucesso ao listar registros",
+        temps
+      );
+    } catch (error) {
+      console.log("🚀 ~ TempController ~ error:", error);
+      SendResponse.error(res, 500, "Erro ao listar registros");
     }
   }
 }
