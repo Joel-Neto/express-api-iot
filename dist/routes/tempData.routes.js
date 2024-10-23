@@ -4,6 +4,7 @@ const express_1 = require("express");
 const TempDataController_1 = require("../controller/TempDataController");
 const routes = (0, express_1.Router)();
 const tempDataController = new TempDataController_1.TempDataController();
-routes.post("/cadastro", tempDataController.register);
+routes.post("/temp", tempDataController.register);
+routes.get("/temp", tempDataController.getAll);
 exports.default = routes;
 //# sourceMappingURL=tempData.routes.js.map
