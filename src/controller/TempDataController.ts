@@ -5,16 +5,31 @@ import SendResponse from "../utils/SendResponse";
 class TempDataController {
   async register(req: Request, res: Response) {
     try {
-      const { temp } = req.body;
+      const {
+        internalTemperature,
+        externalTemperature,
+        internalHumidity,
+        externalHumidity,
+      } = req.body;
 
-      if (!temp || typeof temp !== "number") {
+      if (
+        typeof internalTemperature !== "number" ||
+        typeof externalTemperature !== "number" ||
+        typeof internalHumidity !== "number" ||
+        typeof externalHumidity !== "number"
+      ) {
         return res.status(400).json({
           success: false,
           message: "Campos obrigatórios não preenchidos",
         });
       }
 
-      const newTempData = { temperature: temp }; // Corrigido para corresponder ao campo definido no modelo
+      const newTempData = {
+        internalTemperature,
+        externalTemperature,
+        internalHumidity,
+        externalHumidity,
+      };
 
       const createdTempData = await TempData.create(newTempData);
 

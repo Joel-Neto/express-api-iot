@@ -1,7 +1,19 @@
 import { Schema, model } from "mongoose";
 
 const TempDataSchema = new Schema({
-  temperature: {
+  internalTemperature: {
+    type: Number,
+    required: true,
+  },
+  externalTemperature: {
+    type: Number,
+    required: true,
+  },
+  internalHumidity: {
+    type: Number,
+    required: true,
+  },
+  externalHumidity: {
     type: Number,
     required: true,
   },
