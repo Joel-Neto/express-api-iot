@@ -38,8 +38,12 @@ class TempDataController {
             const { limit = "10", skip = "0" } = req.query;
             const skipNumber = parseInt(skip, 10);
             const limitNumber = parseInt(limit, 10);
+            const count = await TempData_1.TempData.countDocuments();
             const temps = await TempData_1.TempData.find().limit(limit).skip(skip);
-            return SendResponse_1.default.success(res, 200, "Sucesso ao listar registros", temps);
+            return SendResponse_1.default.success(res, 200, "Sucesso ao listar registros", {
+                temps,
+                count,
+            });
         }
         catch (error) {
             console.log("🚀 ~ TempController ~ error:", error);
