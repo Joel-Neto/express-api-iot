@@ -9,4 +9,6 @@ routes.post("/temp", tempDataController.register);
 
 routes.get("/temp", tempDataController.getAll);
 
+routes.get("/temp/dates", tempDataController.getByMonth);
+
 export default routes;

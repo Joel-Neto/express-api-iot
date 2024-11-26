@@ -50,6 +50,34 @@ class TempDataController {
             SendResponse_1.default.error(res, 500, "Erro ao listar registros");
         }
     }
+    async getByMonth(req, res) {
+        try {
+            const { month, year } = req.query;
+            let query = {};
+            if (month && year) {
+                const monthNumber = parseInt(month, 10);
+                const yearNumber = parseInt(year, 10);
+                if (isNaN(monthNumber) || isNaN(yearNumber)) {
+                    return SendResponse_1.default.error(res, 400, "Mês e ano devem ser números válidos");
+                }
+                const startDate = new Date(Date.UTC(yearNumber, monthNumber - 1, 1, 0, 0, 0, 0));
+                const endDate = new Date(Date.UTC(yearNumber, monthNumber, 0, 23, 59, 59, 999));
+                query = {
+                    date: { $gte: startDate, $lte: endDate },
+                };
+            }
+            const count = await TempData_1.TempData.countDocuments(query);
+            const temps = await TempData_1.TempData.find(query);
+            return SendResponse_1.default.success(res, 200, "Sucesso ao listar registros", {
+                count,
+                temps,
+            });
+        }
+        catch (error) {
+            console.log("🚀 ~ TempController ~ error:", error);
+            return SendResponse_1.default.error(res, 500, "Erro ao listar registros");
+        }
+    }
 }
 exports.TempDataController = TempDataController;
 //# sourceMappingURL=TempDataController.js.map
